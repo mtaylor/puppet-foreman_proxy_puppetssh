@@ -1,0 +1,3 @@
+# foreman_puppetssh #
+
+This is the foreman_puppetssh module. It provides...
