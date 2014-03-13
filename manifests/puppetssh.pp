@@ -1,0 +1,47 @@
+class foreman_proxy::puppetssh {
+
+  include params
+
+  file { $home:
+    ensure => 'directory',
+    owner  => $user,
+    group  => $user,
+    mode   => '0600',
+  }
+
+  # Generate SSH keypair for foreman-proxy user
+  ssh_keygen { $user:
+    home => $home
+  }
+
+  # Setup puppetrun configuration
+  file_line { 'Set Puppet Provider to PuppetSSH':
+    path  => $config,
+    line  => ':puppet_provider: puppetssh',
+    match => '^.*:puppet_provider:.*$',
+  }
+
+  file_line { 'PuppetSSH: Private Key': 
+    path  => $config,
+    line  => ":puppetssh_key: $home/.ssh/id_rsa",
+    match => '^.*:puppetssh_key:.*$',
+  }
+
+  file_line { 'PuppetSSH: Command':
+    path  => '/etc/foreman-proxy/settings.yml',
+    line  => ":puppetssh_command: $puppetssh_command",
+    match => '^.*:puppetssh_command:.*$',
+  }
+
+  file_line { 'PuppetSSH: Do not use sudo':
+    path  => $config,
+    line  => ":puppetssh_sudo: $puppetssh_sudo",
+    match => '^.*:puppetssh_sudo:.*$',
+  }
+
+  file_line { 'PuppetSSH: Set root user':
+    path  => $config,
+    line  => ":puppetssh_user: $puppetssh_user",
+    match => '^.*:puppetssh_user:.*$',
+  }
+}
