@@ -1,3 +1,3 @@
 # foreman_puppetssh #
 
-This is the foreman_puppetssh module. It provides...
+This module configure the foreman-proxy to use puppetssh and provides puppet class for distributing ssh public keys to host machines. 
