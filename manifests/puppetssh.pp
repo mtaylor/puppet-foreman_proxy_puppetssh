@@ -1,6 +1,6 @@
-class foreman_proxy::puppetssh {
+include params
 
-  include params
+class foreman_proxy::puppetssh {
 
   file { $home:
     ensure => 'directory',
@@ -28,7 +28,7 @@ class foreman_proxy::puppetssh {
   }
 
   file_line { 'PuppetSSH: Command':
-    path  => '/etc/foreman-proxy/settings.yml',
+    path  => $config,
     line  => ":puppetssh_command: $puppetssh_command",
     match => '^.*:puppetssh_command:.*$',
   }

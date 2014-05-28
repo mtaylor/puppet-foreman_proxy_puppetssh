@@ -1,7 +1,9 @@
+include params
+
 ssh_authorized_key { 'authorized_keys':
-  name     => 'foreman-proxy',
+  name     => $user,
   ensure   => 'present',
-  key      => regsubst(file('/usr/share/foreman-proxy/.ssh/id_rsa.pub'), '^\S*\s(\S*).*$', '\0'),
+  key      => regsubst(file("{$home}/id_rsa.pub"), '^\S*\s(\S*).*$', '\0'),
   type     => ssh-rsa,
-  user     => root
+  user     => $puppetssh_user
 }

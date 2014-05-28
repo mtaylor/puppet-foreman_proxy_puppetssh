@@ -2,6 +2,7 @@ class foreman_proxy::params {
 
   # variables
   $user              = 'foreman-proxy'
+  $group             = 'foreman-proxy'
   $home              = '/usr/share/foreman-proxy'
   $config            = '/etc/foreman-proxy/settings.yml'
 
